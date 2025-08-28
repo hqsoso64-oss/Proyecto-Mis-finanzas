@@ -1,1 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor Financiero Inteligente</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h2, h3 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #145cb6;
+        }
+        .message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        .message.success {
+            background-color: #e6f4ea;
+            color: #1e8449;
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab-button {
+            flex-grow: 1;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px 8px 0 0;
+        }
+        .tab-button.active {
+            background-color: #fff;
+            color: #1a73e8;
+            border-bottom: 2px solid #1a73e8;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .ahorros-list, .deudas-list, .cuentas-resumen {
+            list-style: none;
+            padding: 0;
+        }
+        .ahorros-list li, .deudas-list li, .cuentas-resumen li {
+            background-color: #f1f3f4;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-weight: 500;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 15px;
+        }
+        .progress-bar {
+            background-color: #4CAF50;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .progress-label span:first-child { font-weight: bold; }
+        .dashboard-stats, .cuentas-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            padding: 10px;
+            border-radius: 8px;
+            flex-grow: 1;
+            margin: 5px;
+            min-width: 120px;
+        }
+        .stat-box.ingresos { background-color: #e6f4ea; }
+        .stat-box.gastos { background-color: #fce8e6; }
+        .stat-box.balance { background-color: #e8f0fe; }
+        .stat-box.nequi-tarjeta { background-color: #e8f0fe; }
+        .stat-box.nequi-bolsillo { background-color: #e6f4ea; }
+        .stat-box.deuda-didi { background-color: #fce8e6; }
+        .stat-box.efectivo { background-color: #fff3e0; }
+        .stat-box h4 { margin: 0; font-size: 1.1em; color: #555; }
+        .stat-box p { margin: 5px 0 0; font-size: 1.3em; font-weight: bold; }
+        .stat-box.ingresos p { color: #1e8449; }
+        .stat-box.gastos p { color: #d93025; }
+        .stat-box.balance p { color: #1a73e8; }
+        .stat-box.nequi-tarjeta p { color: #1a73e8; }
+        .stat-box.nequi-bolsillo p { color: #1e8449; }
+        .stat-box.deuda-didi p { color: #d93025; }
+        .stat-box.efectivo p { color: #f9ab00; }
+        .deuda-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .deuda-item:last-child { border-bottom: none; }
+        .chart-container {
+          width: 100%;
+          height: 300px;
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <h2>Gestor Financiero Inteligente 🧠</h2>
+
+    <div class="tab-buttons">
+        <button class="tab-button active" onclick="openTab(event, 'tab1')">Resumen</button>
+        <button class="tab-button" onclick="openTab(event, 'tab2')">Registros</button>
+        <button class="tab-button" onclick="openTab(event, 'tab3')">Distribución</button>
+        <button class="tab-button" onclick="openTab(event, 'tab4')">Deudas</button>
+        <button class="tab-button" onclick="openTab(event, 'tab5')">Cuentas Didi</button>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+        <h3>Dashboard</h3>
+        <div class="dashboard-stats">
+            <div class="stat-box ingresos">
+                <h4>Ingresos</h4>
+                <p id="totalIngresos"></p>
+            </div>
+            <div class="stat-box gastos">
+                <h4>Gastos</h4>
+                <p id="totalGastos"></p>
+            </div>
+            <div class="stat-box balance">
+                <h4>Balance</h4>
+                <p id="balance"></p>
+            </div>
+        </div>
+        <div class="chart-container" id="gastosChart"></div>
+    </div>
+
+    <div id="tab2" class="tab-content">
+        <h3>Registrar Ingreso</h3>
+        <form id="ingresoForm">
+            <label for="montoIngreso">Monto:</label>
+            <input type="number" id="montoIngreso" name="monto" required>
+            <label for="fuente">Fuente:</label>
+            <input type="text" id="fuente" name="fuente" required>
+            <label for="comentariosIngreso">Comentarios:</label>
+            <input type="text" id="comentariosIngreso" name="comentarios">
+            <button type="submit">Guardar Ingreso</button>
+        </form>
+
+        <hr style="margin: 30px 0;">
+
+        <h3>Registrar Gasto</h3>
+        <form id="gastoForm">
+            <label for="montoGasto">Monto:</label>
+            <input type="number" id="montoGasto" name="monto" required>
+            <label for="categoria">Categoría:</label>
+            <input type="text" id="categoria" name="categoria" required>
+            <label for="comentariosGasto">Comentarios:</label>
+            <input type="text" id="comentariosGasto" name="comentarios">
+            <button type="submit">Guardar Gasto</button>
+        </form>
+        <div id="message2" class="message success"></div>
+    </div>
+
+    <div id="tab3" class="tab-content">
+        <h3>Mi Distribución Inteligente</h3>
+        <ul id="distribucion-list" class="ahorros-list"></ul>
+    </div>
+
+    <div id="tab4" class="tab-content">
+        <h3>Control de Deudas</h3>
+        <form id="pagoDeudaForm">
+            <label for="deudaSelect">Seleccionar Deuda:</label>
+            <select id="deudaSelect" name="deuda" required>
+                <option value="">Cargando deudas...</option>
+            </select>
+            <label for="montoPago">Monto de Pago:</label>
+            <input type="number" id="montoPago" name="monto" required>
+            <button type="submit">Registrar Pago</button>
+        </form>
+
+        <hr style="margin: 20px 0;">
+
+        <h3>Resumen de Deudas</h3>
+        <ul id="deudas-list" class="deudas-list"></ul>
+        <div id="message4" class="message success"></div>
+    </div>
+
+    <div id="tab5" class="tab-content">
+        <h3>Actualizar Cuentas Didi</h3>
+        <form id="cuentasDidiForm">
+            <label for="saldoNequiTarjeta">Saldo Nequi Tarjeta:</label>
+            <input type="number" id="saldoNequiTarjeta" name="saldoNequiTarjeta" required>
+            <label for="saldoNequiBolsillo">Saldo Nequi Bolsillo:</label>
+            <input type="number" id="saldoNequiBolsillo" name="saldoNequiBolsillo" required>
+            <label for="deudaDidi">Deuda con Didi Food:</label>
+            <input type="number" id="deudaDidi" name="deudaDidi" required>
+            <label for="efectivoBilletera">Efectivo en Billetera:</label>
+            <input type="number" id="efectivoBilletera" name="efectivoBilletera" required>
+            <button type="submit">Registrar Cuentas</button>
+        </form>
+
+        <hr style="margin: 20px 0;">
+
+        <h3>Último Resumen de Cuentas</h3>
+        <div id="cuentas-resumen">
+            <div class="cuentas-stats">
+                <div class="stat-box nequi-tarjeta">
+                    <h4>Nequi Tarjeta</h4>
+                    <p id="nequiTarjeta"></p>
+                </div>
+                <div class="stat-box nequi-bolsillo">
+                    <h4>Nequi Bolsillo</h4>
+                    <p id="nequiBolsillo"></p>
+                </div>
+                <div class="stat-box deuda-didi">
+                    <h4>Deuda Didi</h4>
+                    <p id="deudaDidi"></p>
+                </div>
+                <div class="stat-box efectivo">
+                    <h4>Efectivo Billetera</h4>
+                    <p id="efectivoBilletera"></p>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.9em; color: #888;">Actualizado: <span id="fechaActualizacion"></span></p>
+        </div>
+        <div id="message5" class="message success"></div>
+    </div>
+</div>
+
+<script>
+    const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+
+    document.getElementById('ingresoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        google.script.run.withSuccessHandler(function(distribucionPlan) {
+            showSuccess('Ingreso guardado y distribuido');
+            if (distribucionPlan && distribucionPlan.length > 0) {
+                let mensaje = 'Distribución recomendada:\n\n';
+                distribucionPlan.forEach(item => {
+                    mensaje += `${item.meta}: ${formatter.format(item.monto)}\n`;
+                });
+                alert(mensaje);
+            }
+        }).registrarIngreso(data);
+        e.target.reset();
+    });
+
+    document.getElementById('gastoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        google.script.run.withSuccessHandler(showSuccess('Gasto guardado')).registrarGasto(data);
+        e.target.reset();
+    });
+    
+    document.getElementById('pagoDeudaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        google.script.run.withSuccessHandler(showSuccess('Pago registrado')).registrarPagoDeuda(data);
+        e.target.reset();
+    });
+
+    document.getElementById('cuentasDidiForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        google.script.run.withSuccessHandler(showSuccess('Cuentas Didi actualizadas')).procesarCuentasDidi(data);
+        e.target.reset();
+    });
+
+    function showSuccess(message) {
+      return function() {
+        const activeTab = document.querySelector('.tab-content.active');
+        const messageBox = activeTab.querySelector('.message');
+        if (messageBox) {
+          messageBox.textContent = message;
+          messageBox.style.display = 'block';
+          setTimeout(() => messageBox.style.display = 'none', 3000);
+          loadDataForTab(activeTab.id);
+        }
+      };
+    }
+    
+    function openTab(evt, tabName) {
+        let i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+
+        loadDataForTab(tabName);
+    }
+    
+    function loadDataForTab(tabName) {
+        if (tabName === 'tab1') {
+            google.script.run.withSuccessHandler(renderDashboard).getTotals();
+            google.script.run.withSuccessHandler(drawGastosChart).getGastosByCategory();
+        } else if (tabName === 'tab3') {
+            google.script.run.withSuccessHandler(renderDistribucionData).getDistribucionData();
+        } else if (tabName === 'tab4') {
+            google.script.run.withSuccessHandler(renderDeudasData).getDeudasData();
+        } else if (tabName === 'tab5') {
+            google.script.run.withSuccessHandler(renderCuentasDidi).getUltimasCuentasDidi();
+        }
+    }
+
+    function renderDashboard(totals) {
+        document.getElementById('totalIngresos').textContent = formatter.format(totals.totalIngresos);
+        document.getElementById('totalGastos').textContent = formatter.format(totals.totalGastos);
+        document.getElementById('balance').textContent = formatter.format(totals.totalIngresos - totals.totalGastos);
+    }
+
+    function renderDistribucionData(data) {
+        const list = document.getElementById('distribucion-list');
+        list.innerHTML = '';
+        if (data.length <= 1) {
+            list.innerHTML = '<li>Aún no tienes metas de distribución.</li>';
+            return;
+        }
+        
+        data.slice(1).forEach(row => {
+            const meta = row[0];
+            const montoNecesario = parseFloat(row[1]) || 0;
+            const montoAhorrado = parseFloat(row[4]) || 0;
+            const porcentaje = montoNecesario > 0 ? (montoAhorrado / montoNecesario) * 100 : 100;
+            
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="progress-label">
+                    <span>${meta}</span>
+                    <span>${formatter.format(montoAhorrado)}</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: ${Math.min(porcentaje, 100)}%;"></div>
+                </div>
+                ${montoNecesario > 0 ? `<div style="text-align: right; font-size: 0.8em; color: #888;">de ${formatter.format(montoNecesario)}</div>` : ''}
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    function renderDeudasData(data) {
+        const list = document.getElementById('deudas-list');
+        const select = document.getElementById('deudaSelect');
+        list.innerHTML = '';
+        select.innerHTML = '<option value="">Selecciona una deuda</option>';
+
+        if (!data || data.length === 0) {
+            list.innerHTML = '<li>No hay deudas registradas.</li>';
+            return;
+        }
+
+        data.forEach(row => {
+            const deuda = row[0];
+            const montoInicial = parseFloat(row[1]) || 0;
+            const montoPagado = parseFloat(row[2]) || 0;
+            const montoPendiente = parseFloat(row[3]) || 0;
+            
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="deuda-item">
+                    <span><strong>${deuda}</strong></span>
+                    <span>Pendiente: ${formatter.format(montoPendiente)}</span>
+                </div>
+                <div style="font-size: 0.8em; text-align: right; color: #888;">Pagado: ${formatter.format(montoPagado)} / Total: ${formatter.format(montoInicial)}</div>
+            `;
+            list.appendChild(li);
+
+            const option = document.createElement('option');
+            option.value = deuda;
+            option.textContent = deuda;
+            select.appendChild(option);
+        });
+    }
+    
+    function renderCuentasDidi(data) {
+        if (data) {
+            document.getElementById('nequiTarjeta').textContent = formatter.format(data.Saldo_Nequi_Tarjeta);
+            document.getElementById('nequiBolsillo').textContent = formatter.format(data.Saldo_Nequi_Bolsillo);
+            document.getElementById('deudaDidi').textContent = formatter.format(data.Deuda_Didi);
+            document.getElementById('efectivoBilletera').textContent = formatter.format(data.Efectivo_Billetera);
+            document.getElementById('fechaActualizacion').textContent = data.Fecha || 'N/A';
+        } else {
+            document.getElementById('nequiTarjeta').textContent = formatter.format(0);
+            document.getElementById('nequiBolsillo').textContent = formatter.format(0);
+            document.getElementById('deudaDidi').textContent = formatter.format(0);
+            document.getElementById('efectivoBilletera').textContent = formatter.format(0);
+            document.getElementById('fechaActualizacion').textContent = 'N/A';
+        }
+    }
+
+    google.charts.load('current', {'packages':['corechart']});
+
+    function drawGastosChart(data) {
+        const chartData = google.visualization.arrayToDataTable(data);
+        const options = {
+            title: 'Distribución de Gastos',
+            pieHole: 0.4,
+            colors: ['#4CAF50', '#d93025', '#1a73e8', '#f9ab00', '#747474', '#c5d1eb']
+        };
+        const chart = new google.visualization.PieChart(document.getElementById('gastosChart'));
+        chart.draw(chartData, options);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('.tab-button').click();
+    });
+</script>
+</body>
+</html>
