@@ -73,6 +73,20 @@ Este proyecto es de código abierto para fines educativos. Si deseas implementar
 
 ---
 
+## 📸 Galería de Capturas
+
+| **Dashboard Principal** | **Distribución Inteligente** |
+|:---:|:---:|
+| ![Dashboard](assets/dashboard.png) | ![Distribucion](assets/distribucion.png) |
+| **Resumen de estado financiero** | **Motor de asignación de ingresos** |
+
+| **Registro de Movimientos** | **Control de Deudas** |
+|:---:|:---:|
+| ![Registros](assets/registros.png) | ![Deudas](assets/deudas.png) |
+| **Interfaz de captura rápida** | **Seguimiento método bola de nieve** |
+
+---
+
 ## 📄 Autor
 
 Desarrollado por **[John Fredy Muñoz](https://www.linkedin.com/in/jfmu%C3%B1oz/)**.
