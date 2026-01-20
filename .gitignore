@@ -1,4 +1,5 @@
 *.xlsx
+!Base_Datos_Demo.xlsx
 *.csv
 .DS_Store
 node_modules/
