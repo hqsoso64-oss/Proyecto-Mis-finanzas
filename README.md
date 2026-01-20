@@ -58,12 +58,13 @@ El sistema se alimenta de una Hoja de Cálculo principal con las siguientes pest
 
 Este proyecto es de código abierto para fines educativos. Si deseas implementar tu propia versión:
 
-1.  **Crea tu Hoja de Cálculo:**
-    *   Crea un nuevo Google Sheet.
-    *   Nombra las pestañas según la estructura de datos mencionada arriba.
+1.  **Configura tu Base de Datos:**
+    *   Descarga el archivo `Base_Datos_Demo.xlsx` de este repositorio.
+    *   Súbelo a tu Google Drive y ábrelo como Hoja de Cálculo de Google.
+    *   (Opcional) Borra los datos de ejemplo, pero **mantén los encabezados** y nombres de pestañas intactos.
 
 2.  **Instala el Código:**
-    *   Ve a `Extensiones` > `Apps Script`.
+    *   En tu nueva hoja, ve a `Extensiones` > `Apps Script`.
     *   Copia el contenido de `Código.gs` en el editor.
     *   Copia el contenido de `Index.html` creando un archivo HTML homónimo.
 

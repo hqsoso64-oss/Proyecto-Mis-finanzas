@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+        }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+            margin-bottom: 20px; /* Solo para visualización web, no afecta impresión si se configura bien */
+        }
+
+        /* FONDO Y FORMAS */
+        .bg-shape {
+            position: absolute;
+            z-index: 0;
+        }
+        .circle-top {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            top: -150px;
+            right: -100px;
+            opacity: 0.1;
+        }
+        .circle-bottom {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #EA4335, #FBBC05);
+            bottom: -200px;
+            left: -150px;
+            opacity: 0.1;
+        }
+
+        /* CONTENIDO */
+        .content {
+            z-index: 10;
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 { font-size: 60px; color: #333; margin: 0 0 20px 0; line-height: 1.1; }
+        h2 { font-size: 40px; color: #4285F4; margin: 0 0 30px 0; }
+        h3 { font-size: 28px; color: #5f6368; font-weight: 400; margin-bottom: 40px; }
+        p { font-size: 24px; color: #555; line-height: 1.5; max-width: 800px; }
+        
+        .highlight { color: #34A853; font-weight: bold; }
+        .tag { 
+            background: #e8f0fe; color: #1967d2; 
+            padding: 10px 20px; border-radius: 50px; 
+            font-size: 20px; font-weight: 600;
+            display: inline-block; margin-right: 15px; margin-bottom: 15px;
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .screenshot {
+            max-width: 90%;
+            max-height: 450px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 5px solid #fff;
+        }
+
+        /* PORTADA */
+        .cover { text-align: center; align-items: center; }
+        .cover h1 { font-size: 72px; margin-bottom: 20px; background: linear-gradient(90deg, #4285F4, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .author { margin-top: 60px; font-size: 28px; color: #666; border-top: 2px solid #eee; padding-top: 20px; width: 60%; }
+
+        /* CIERRE */
+        .cta-container {
+            background: #202124;
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .cta-link { color: #4285F4; text-decoration: none; font-weight: bold; font-size: 32px; }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            font-size: 16px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DIAPOSITIVA 1: PORTADA -->
+    <div class="slide cover">
+        <div class="bg-shape circle-top"></div>
+        <div class="bg-shape circle-bottom"></div>
+        <div class="content">
+            <div style="margin-bottom: 30px;">
+                <span class="tag">💡 Finanzas Personales</span>
+                <span class="tag">🚀 Automatización</span>
+            </div>
+            <h1>Gestor Financiero<br>Inteligente</h1>
+            <h3>Google Apps Script + Google Sheets + Web App</h3>
+            
+            <img src="assets/dashboard.png" style="width: 700px; border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); margin: 30px auto;">
+            
+            <div class="author">
+                <strong>John Fredy Muñoz</strong><br>
+                Ingeniero de Software & Automatización
+            </div>
+        </div>
+    </div>
+
+    <!-- DIAPOSITIVA 2: EL PROBLEMA -->
+    <div class="slide">
+        <div class="bg-shape circle-top"></div>
+        <div class="content">
+            <h2>🚨 El Problema</h2>
+            <h1>¿Tu dinero desaparece y no sabes dónde?</h1>
+            <p>Usar hojas de Excel manuales es <span class="highlight">tedioso, propenso a errores y aburrido</span>. La mayoría de apps financieras te cobran suscripción o venden tus datos.</p>
+            <br>
+            <div style="display:flex; gap: 30px; align-items:center;">
+                <div style="background:#fff; padding:30px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05); width: 45%;">
+                    <h3 style="margin:0; color:#EA4335">❌ Excel Tradicional</h3>
+                    <p style="font-size:18px">Entrada manual, fórmulas rotas, difícil acceso desde el móvil.</p>
+                </div>
+                <div style="background:#fff; padding:30px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05); width: 45%;">
+                    <h3 style="margin:0; color:#FBBC05">⚠️ Apps de Pago</h3>
+                    <p style="font-size:18px">Costo mensual, datos en servidores de terceros, personalización limitada.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">02</div>
+    </div>
+
+    <!-- DIAPOSITIVA 3: LA SOLUCIÓN -->
+    <div class="slide">
+        <div class="bg-shape circle-bottom"></div>
+        <div class="content">
+            <h2>💡 La Solución</h2>
+            <h1>Automatización Inteligente en la Nube</h1>
+            <p>Un sistema 100% personalizado que vive en tu cuenta de Google. </p>
+            <ul>
+                <li style="font-size: 24px; margin-bottom: 15px; color:#555;">🧠 <strong>Distribución Heurística:</strong> El sistema decide cuánto ahorrar basado en tus metas y prioridades.</li>
+                <li style="font-size: 24px; margin-bottom: 15px; color:#555;">📱 <strong>Web App Móvil:</strong> Registra gastos en 3 segundos desde tu celular.</li>
+                <li style="font-size: 24px; margin-bottom: 15px; color:#555;">☁️ <strong>Serverless:</strong> Sin costos de servidor, alta disponibilidad.</li>
+            </ul>
+            <div class="img-container">
+                <img src="assets/distribucion.png" class="screenshot">
+            </div>
+        </div>
+        <div class="footer">03</div>
+    </div>
+
+    <!-- DIAPOSITIVA 4: DASHBOARD -->
+    <div class="slide">
+        <div class="bg-shape circle-top"></div>
+        <div class="content">
+            <h2>📊 Control Total</h2>
+            <h1>Dashboard en Tiempo Real</h1>
+            <p>Tus datos financieros convertidos en información procesable al instante.</p>
+            <div class="img-container">
+                <img src="assets/dashboard.png" class="screenshot" style="max-height: 500px;">
+            </div>
+        </div>
+        <div class="footer">04</div>
+    </div>
+
+    <!-- DIAPOSITIVA 5: CIERRE -->
+    <div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+        <div class="bg-shape circle-top" style="right: auto; left: -100px;"></div>
+        <div class="bg-shape circle-bottom" style="left: auto; right: -100px;"></div>
+        <div class="content" style="align-items: center;">
+            <h1>¿Te interesa este proyecto?</h1>
+            <p>El código es 100% Abierto para fines educativos.</p>
+            
+            <div class="cta-container">
+                <div style="font-size: 24px; margin-bottom: 20px;">👇 Descarga el código en GitHub 👇</div>
+                <div class="cta-link">github.com/hqsoso64-oss</div>
+            </div>
+
+            <p style="margin-top: 50px; font-weight: bold;">
+                Sígueme para más proyectos de<br>
+                <span style="color:#4285F4">Ingeniería</span> • <span style="color:#34A853">Automatización</span> • <span style="color:#EA4335">IA</span>
+            </p>
+        </div>
+        <div class="footer">05</div>
+    </div>
+
+</body>
+</html>
