@@ -1,15 +1,21 @@
-# 🚀 Gestor Financiero Pro (V2)
+# 🚀 Gestor Financiero Pro (V2.1 - Coach IA Edition)
 
-¡Bienvenido a la evolución del control financiero personal! Esta **versión 2.0** introduce un rediseño total con **Dark Mode Premium** y mejoras críticas de rendimiento.
+¡Bienvenido a la evolución del control financiero personal! Esta **versión 2.1** introduce inteligencia artificial básica para diagnósticos financieros y un rediseño total con **Dark Mode Premium**.
 
 ![Dashboard Preview](assets/nueva%20interfaz/dasboard.png)
 
-## ✨ Novedades de la Versión 2.0
+## ✨ Novedades de la Versión 2.1
 
-### 🎨 1. Nueva Interfaz Dark Mode
+### 🧠 1. Coach Financiero Inteligente (Nuevo)
+Hemos integrado un motor de análisis heurístico que actúa como tu asesor personal.
+- **Diagnóstico en Tiempo Real:** Analiza ingresos, gastos y deudas al instante.
+- **Semáforo Financiero:** Clasifica tu estado en "Déficit Crítico", "Zona de Riesgo" o "Saludable".
+- **Consejos Accionables:** Genera planes de acción específicos (ej. "Método Bola de Nieve") y tips educativos aleatorios cada vez que consultas.
+
+### 🎨 2. Nueva Interfaz Dark Mode
 Hemos migrado a un diseño oscuro profesional (`#050505`) inspirado en plataformas de trading y auditoría de alta gama.
 - **Tipografía:** Inter (Google Fonts) para máxima legibilidad.
-- **Colorimetría:** Acentos neón para estados financieros (Azul = Balance, Verde = Ingresos, Rojo = Gastos).
+- **Colorimetría:** Acentos neón para estados financieros.
 - **UX:** Tarjetas con elevación sutil y feedback visual inmediato.
 
 <table>
@@ -19,18 +25,14 @@ Hemos migrado a un diseño oscuro profesional (`#050505`) inspirado en plataform
   </tr>
   <tr>
     <td align="center"><b>Registro de Movimientos</b><br><img src="assets/nueva%20interfaz/Registro.png" width="400"></td>
-    <td align="center"><b>Control de Cuentas (Bubbles)</b><br><img src="assets/nueva%20interfaz/Cuentas.png" width="400"></td>
+    <td align="center"><b>Coach IA</b><br><img src="assets/nueva%20interfaz/Cuentas.png" width="400"></td>
   </tr>
 </table>
 
-### 🛠️ 2. Mejoras Técnicas (Under the Hood)
-- **Fix "Ghost Data" en Deudas:** Solucionado el error crítico donde las deudas desaparecían al registrar pagos. Ahora el sistema lee de forma inteligente las columnas `A:D`, ignorando metadatos de auditoría como fechas de actualización.
-- **Validación Robusta de Fechas:** Filtros de mes/año refactorizados para garantizar que los reportes siempre muestren datos precisos del periodo actual.
-- **Arquitectura Cliente-Servidor:** Nueva capa de comunicación asíncrona que maneja errores de red ("ScriptError: Network") en dispositivos móviles con reintentos automáticos.
-
-### 🧠 3. Funcionalidades Smart
-- **Asistente de Distribución:** Al registrar un ingreso, el sistema sugiere automáticamente cómo distribuirlo siguiendo la regla 50/30/20 (o tu configuración personalizada).
-- **Indicadores Visuales:** Gráficos de Google Charts integrados con fondo transparente para armonizar con el tema oscuro.
+### 🛠️ 3. Mejoras Técnicas (Under the Hood)
+- **Fix "Ghost Data" en Deudas:** Solucionado el error crítico donde las deudas desaparecían al registrar pagos.
+- **Validación Robusta de Fechas:** Filtros de mes/año refactorizados.
+- **Arquitectura Cliente-Servidor:** Nueva capa de comunicación asíncrona segura para evitar bloqueos de interfaz (Spinner infinito resuelto).
 
 ---
 
