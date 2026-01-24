@@ -1,493 +1,625 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <base target="_top">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor Financiero Inteligente</title>
+    <title>Gestor Financiero Pro</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #050505;
+            /* Fondo Ultra Oscuro */
+            --card-bg: #0f1115;
+            /* Tarjetas Ligeramente más claras */
+            --accent-blue: #3b82f6;
+            /* Azul Neón */
+            --text-main: #e5e7eb;
+            /* Blanco Hielo */
+            --text-muted: #9ca3af;
+            /* Gris suave */
+            --border-color: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
+
         .container {
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background-color: transparent;
         }
-        h2, h3 {
-            color: #1a73e8;
+
+        /* HEADER */
+        h2 {
+            font-weight: 800;
+            font-size: 28px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #145cb6;
-        }
-        .message {
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-weight: 600;
-            display: none;
-        }
-        .message.success {
-            background-color: #e6f4ea;
-            color: #1e8449;
-        }
+
+        /* TABS */
         .tab-buttons {
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ddd;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
+
         .tab-button {
-            flex-grow: 1;
-            padding: 12px 15px;
-            background-color: #f8f9fa;
-            border: none;
+            background-color: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            /* Pill shape */
             cursor: pointer;
             font-size: 14px;
             font-weight: 600;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
         }
-        .tab-button.active {
-            background-color: #fff;
-            color: #1a73e8;
-            border-bottom: 2px solid #1a73e8;
+
+        .tab-button.active,
+        .tab-button:hover {
+            background-color: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
         }
+
         .tab-content {
             display: none;
+            animation: fadeIn 0.4s ease;
         }
+
         .tab-content.active {
             display: block;
         }
-        .ahorros-list, .deudas-list, .cuentas-resumen {
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CARDS & STATS */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-card p {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-card.balance p {
+            color: var(--accent-blue);
+        }
+
+        .stat-card.gastos p {
+            color: var(--danger);
+        }
+
+        .stat-card.ingresos p {
+            color: var(--success);
+        }
+
+        /* CIRCLE STATS (BUBBLES) */
+        .bubbles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            justify-items: center;
+            margin-top: 30px;
+        }
+
+        .bubble {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(145deg, #1a202c, #111827);
+            border: 2px solid;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .bubble.blue {
+            border-color: #3b82f6;
+            color: #60a5fa;
+        }
+
+        .bubble.green {
+            border-color: #10b981;
+            color: #34d399;
+        }
+
+        .bubble.red {
+            border-color: #ef4444;
+            color: #f87171;
+        }
+
+        .bubble.yellow {
+            border-color: #f59e0b;
+            color: #fbbf24;
+        }
+
+        .bubble h4 {
+            margin: 0 0 5px 0;
+            font-size: 12px;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .bubble p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* FORMS */
+        form {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        label {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        input,
+        select {
+            width: 100%;
+            background-color: #050505;
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* LISTS */
+        ul {
             list-style: none;
             padding: 0;
         }
-        .ahorros-list li, .deudas-list li, .cuentas-resumen li {
-            background-color: #f1f3f4;
-            padding: 12px;
+
+        li {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
             margin-bottom: 10px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            font-weight: 500;
-        }
-        .progress-bar-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            height: 15px;
-        }
-        .progress-bar {
-            background-color: #4CAF50;
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease-in-out;
-        }
-        .progress-label {
+            border-left: 4px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9em;
-            color: #555;
         }
-        .progress-label span:first-child { font-weight: bold; }
-        .dashboard-stats, .cuentas-stats {
-            display: flex;
-            justify-content: space-around;
+
+        li span {
+            font-weight: 600;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #34d399;
             text-align: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .stat-box {
-            padding: 10px;
-            border-radius: 8px;
-            flex-grow: 1;
-            margin: 5px;
-            min-width: 120px;
-        }
-        .stat-box.ingresos { background-color: #e6f4ea; }
-        .stat-box.gastos { background-color: #fce8e6; }
-        .stat-box.balance { background-color: #e8f0fe; }
-        .stat-box.nequi-tarjeta { background-color: #e8f0fe; }
-        .stat-box.nequi-bolsillo { background-color: #e6f4ea; }
-        .stat-box.deuda-didi { background-color: #fce8e6; }
-        .stat-box.efectivo { background-color: #fff3e0; }
-        .stat-box h4 { margin: 0; font-size: 1.1em; color: #555; }
-        .stat-box p { margin: 5px 0 0; font-size: 1.3em; font-weight: bold; }
-        .stat-box.ingresos p { color: #1e8449; }
-        .stat-box.gastos p { color: #d93025; }
-        .stat-box.balance p { color: #1a73e8; }
-        .stat-box.nequi-tarjeta p { color: #1a73e8; }
-        .stat-box.nequi-bolsillo p { color: #1e8449; }
-        .stat-box.deuda-didi p { color: #d93025; }
-        .stat-box.efectivo p { color: #f9ab00; }
-        .deuda-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .deuda-item:last-child { border-bottom: none; }
-        .chart-container {
-          width: 100%;
-          height: 300px;
+            display: none;
+            border: 1px solid #10b981;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Gestor Financiero Inteligente 🧠</h2>
+    <div class="container">
+        <h2>Gestor Financiero Pro</h2>
 
-    <div class="tab-buttons">
-        <button class="tab-button active" onclick="openTab(event, 'tab1')">Resumen</button>
-        <button class="tab-button" onclick="openTab(event, 'tab2')">Registros</button>
-        <button class="tab-button" onclick="openTab(event, 'tab3')">Distribución</button>
-        <button class="tab-button" onclick="openTab(event, 'tab4')">Deudas</button>
-        <button class="tab-button" onclick="openTab(event, 'tab5')">Cuentas Didi</button>
-    </div>
-
-    <div id="tab1" class="tab-content active">
-        <h3>Dashboard</h3>
-        <div class="dashboard-stats">
-            <div class="stat-box ingresos">
-                <h4>Ingresos</h4>
-                <p id="totalIngresos"></p>
-            </div>
-            <div class="stat-box gastos">
-                <h4>Gastos</h4>
-                <p id="totalGastos"></p>
-            </div>
-            <div class="stat-box balance">
-                <h4>Balance</h4>
-                <p id="balance"></p>
-            </div>
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab('tab1')">Resumen</button>
+            <button class="tab-button" onclick="openTab('tab2')">Registros</button>
+            <button class="tab-button" onclick="openTab('tab3')">Metas</button>
+            <button class="tab-button" onclick="openTab('tab4')">Deudas</button>
+            <button class="tab-button" onclick="openTab('tab5')">Cuentas</button>
         </div>
-        <div class="chart-container" id="gastosChart"></div>
-    </div>
 
-    <div id="tab2" class="tab-content">
-        <h3>Registrar Ingreso</h3>
-        <form id="ingresoForm">
-            <label for="montoIngreso">Monto:</label>
-            <input type="number" id="montoIngreso" name="monto" required>
-            <label for="fuente">Fuente:</label>
-            <input type="text" id="fuente" name="fuente" required>
-            <label for="comentariosIngreso">Comentarios:</label>
-            <input type="text" id="comentariosIngreso" name="comentarios">
-            <button type="submit">Guardar Ingreso</button>
-        </form>
+        <!-- DASHBOARD -->
+        <div id="tab1" class="tab-content active">
+            <div class="dashboard-header">
+                RESUMEN DE <span id="mesActual" style="color: white; font-weight: bold;">--</span>
+            </div>
 
-        <hr style="margin: 30px 0;">
+            <div class="stats-grid">
+                <div class="stat-card ingresos">
+                    <h4>Ingresos</h4>
+                    <p id="totalIngresos">$ -</p>
+                </div>
+                <div class="stat-card gastos">
+                    <h4>Gastos</h4>
+                    <p id="totalGastos">$ -</p>
+                </div>
+                <div class="stat-card balance">
+                    <h4>Balance</h4>
+                    <p id="balance">$ -</p>
+                </div>
+            </div>
 
-        <h3>Registrar Gasto</h3>
-        <form id="gastoForm">
-            <label for="montoGasto">Monto:</label>
-            <input type="number" id="montoGasto" name="monto" required>
-            <label for="categoria">Categoría:</label>
-            <input type="text" id="categoria" name="categoria" required>
-            <label for="comentariosGasto">Comentarios:</label>
-            <input type="text" id="comentariosGasto" name="comentarios">
-            <button type="submit">Guardar Gasto</button>
-        </form>
-        <div id="message2" class="message success"></div>
-    </div>
+            <div id="gastosChart" style="width: 100%; height: 300px;"></div>
+        </div>
 
-    <div id="tab3" class="tab-content">
-        <h3>Mi Distribución Inteligente</h3>
-        <ul id="distribucion-list" class="ahorros-list"></ul>
-    </div>
+        <!-- REGISTROS -->
+        <div id="tab2" class="tab-content">
+            <form id="ingresoForm">
+                <h3 style="margin-top:0; color:white;">Nuevo Ingreso 💰</h3>
+                <label>Monto</label>
+                <input type="number" name="monto" placeholder="Ej: 50.000" required>
+                <label>Fuente</label>
+                <input type="text" name="fuente" placeholder="Ej: Salario, Venta..." required>
+                <label>Nota</label>
+                <input type="text" name="comentarios" placeholder="Opcional">
+                <button type="submit">Registrar Ingreso</button>
+            </form>
 
-    <div id="tab4" class="tab-content">
-        <h3>Control de Deudas</h3>
-        <form id="pagoDeudaForm">
-            <label for="deudaSelect">Seleccionar Deuda:</label>
-            <select id="deudaSelect" name="deuda" required>
-                <option value="">Cargando deudas...</option>
-            </select>
-            <label for="montoPago">Monto de Pago:</label>
-            <input type="number" id="montoPago" name="monto" required>
-            <button type="submit">Registrar Pago</button>
-        </form>
+            <br>
 
-        <hr style="margin: 20px 0;">
+            <form id="gastoForm">
+                <h3 style="margin-top:0; color:white;">Nuevo Gasto 💸</h3>
+                <label>Monto</label>
+                <input type="number" name="monto" placeholder="Ej: 12.000" required>
+                <label>Categoría</label>
+                <input type="text" name="categoria" placeholder="Ej: Comida, Transporte..." required>
+                <label>Nota</label>
+                <input type="text" name="comentarios" placeholder="Opcional">
+                <button type="submit">Registrar Gasto</button>
+            </form>
+            <div id="msgRegistros" class="message">Guardado correctamente</div>
+        </div>
 
-        <h3>Resumen de Deudas</h3>
-        <ul id="deudas-list" class="deudas-list"></ul>
-        <div id="message4" class="message success"></div>
-    </div>
+        <!-- DISTRIBUCIÓN -->
+        <div id="tab3" class="tab-content">
+            <ul id="distribucion-list"></ul>
+        </div>
 
-    <div id="tab5" class="tab-content">
-        <h3>Actualizar Cuentas Didi</h3>
-        <form id="cuentasDidiForm">
-            <label for="saldoNequiTarjeta">Saldo Nequi Tarjeta:</label>
-            <input type="number" id="saldoNequiTarjeta" name="saldoNequiTarjeta" required>
-            <label for="saldoNequiBolsillo">Saldo Nequi Bolsillo:</label>
-            <input type="number" id="saldoNequiBolsillo" name="saldoNequiBolsillo" required>
-            <label for="deudaDidi">Deuda con Didi Food:</label>
-            <input type="number" id="deudaDidi" name="deudaDidi" required>
-            <label for="efectivoBilletera">Efectivo en Billetera:</label>
-            <input type="number" id="efectivoBilletera" name="efectivoBilletera" required>
-            <button type="submit">Registrar Cuentas</button>
-        </form>
+        <!-- DEUDAS -->
+        <div id="tab4" class="tab-content">
+            <form id="pagoDeudaForm">
+                <label>Seleccionar Deuda</label>
+                <select id="deudaSelect" name="deuda" required>
+                    <option value="">Cargando...</option>
+                </select>
+                <label>Monto a Abonar</label>
+                <input type="number" name="monto" required>
+                <button type="submit">Registrar Abono</button>
+            </form>
+            <br>
+            <ul id="deudas-list"></ul>
+            <div id="msgDeudas" class="message">Pago realizado</div>
+        </div>
 
-        <hr style="margin: 20px 0;">
+        <!-- CUENTAS DIDI -->
+        <div id="tab5" class="tab-content">
+            <form id="cuentasDidiForm">
+                <label>Nequi Tarjeta</label> <input type="number" name="saldoNequiTarjeta" required>
+                <label>Nequi Bolsillo (Ahorro)</label> <input type="number" name="saldoNequiBolsillo" required>
+                <label>Deuda App (Didi)</label> <input type="number" name="deudaDidi" required>
+                <label>Efectivo Físico</label> <input type="number" name="efectivoBilletera" required>
+                <button type="submit">Actualizar Saldos</button>
+            </form>
 
-        <h3>Último Resumen de Cuentas</h3>
-        <div id="cuentas-resumen">
-            <div class="cuentas-stats">
-                <div class="stat-box nequi-tarjeta">
+            <div class="bubbles-grid">
+                <div class="bubble blue">
                     <h4>Nequi Tarjeta</h4>
-                    <p id="nequiTarjeta"></p>
+                    <p id="nequiTarjeta">$0</p>
                 </div>
-                <div class="stat-box nequi-bolsillo">
+                <div class="bubble green">
                     <h4>Nequi Bolsillo</h4>
-                    <p id="nequiBolsillo"></p>
+                    <p id="nequiBolsillo">$0</p>
                 </div>
-                <div class="stat-box deuda-didi">
+                <div class="bubble red">
                     <h4>Deuda Didi</h4>
-                    <p id="deudaDidi"></p>
+                    <p id="deudaDidi">$0</p>
                 </div>
-                <div class="stat-box efectivo">
-                    <h4>Efectivo Billetera</h4>
-                    <p id="efectivoBilletera"></p>
+                <div class="bubble yellow">
+                    <h4>Efectivo</h4>
+                    <p id="efectivoBilletera">$0</p>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 0.9em; color: #888;">Actualizado: <span id="fechaActualizacion"></span></p>
+            <p style="text-align: center; color:#666; font-size:12px; margin-top:20px;">Última act: <span
+                    id="fechaActualizacion">--</span></p>
+            <div id="msgCuentas" class="message">Saldos Actualizados</div>
         </div>
-        <div id="message5" class="message success"></div>
+
     </div>
-</div>
 
-<script>
-    const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
 
-    document.getElementById('ingresoForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        google.script.run.withSuccessHandler(function(distribucionPlan) {
-            showSuccess('Ingreso guardado y distribuido');
-            if (distribucionPlan && distribucionPlan.length > 0) {
-                let mensaje = 'Distribución recomendada:\n\n';
-                distribucionPlan.forEach(item => {
-                    mensaje += `${item.meta}: ${formatter.format(item.monto)}\n`;
-                });
-                alert(mensaje);
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+
+            // Encontrar botón y activarlo visualmente
+            // Lógica simplificada de botones
+            const index = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'].indexOf(tabName);
+            if (index >= 0 && document.querySelectorAll('.tab-button')[index]) {
+                document.querySelectorAll('.tab-button')[index].classList.add('active');
             }
-        }).registrarIngreso(data);
-        e.target.reset();
-    });
 
-    document.getElementById('gastoForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        google.script.run.withSuccessHandler(showSuccess('Gasto guardado')).registrarGasto(data);
-        e.target.reset();
-    });
-    
-    document.getElementById('pagoDeudaForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        google.script.run.withSuccessHandler(showSuccess('Pago registrado')).registrarPagoDeuda(data);
-        e.target.reset();
-    });
-
-    document.getElementById('cuentasDidiForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        google.script.run.withSuccessHandler(showSuccess('Cuentas Didi actualizadas')).procesarCuentasDidi(data);
-        e.target.reset();
-    });
-
-    function showSuccess(message) {
-      return function() {
-        const activeTab = document.querySelector('.tab-content.active');
-        const messageBox = activeTab.querySelector('.message');
-        if (messageBox) {
-          messageBox.textContent = message;
-          messageBox.style.display = 'block';
-          setTimeout(() => messageBox.style.display = 'none', 3000);
-          loadDataForTab(activeTab.id);
+            // Cargar datos
+            loadData(tabName);
         }
-      };
-    }
-    
-    function openTab(evt, tabName) {
-        let i, tabcontent, tabbuttons;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tabbuttons = document.getElementsByClassName("tab-button");
-        for (i = 0; i < tabbuttons.length; i++) {
-            tabbuttons[i].classList.remove("active");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.classList.add("active");
 
-        loadDataForTab(tabName);
-    }
-    
-    function loadDataForTab(tabName) {
-        if (tabName === 'tab1') {
-            google.script.run.withSuccessHandler(renderDashboard).getTotals();
-            google.script.run.withSuccessHandler(drawGastosChart).getGastosByCategory();
-        } else if (tabName === 'tab3') {
-            google.script.run.withSuccessHandler(renderDistribucionData).getDistribucionData();
-        } else if (tabName === 'tab4') {
-            google.script.run.withSuccessHandler(renderDeudasData).getDeudasData();
-        } else if (tabName === 'tab5') {
-            google.script.run.withSuccessHandler(renderCuentasDidi).getUltimasCuentasDidi();
+        function loadData(tab) {
+            if (tab === 'tab1') {
+                document.getElementById('mesActual').textContent = new Date().toLocaleString('es-CO', { month: 'long', year: 'numeric' }).toUpperCase();
+                run('getTotals', renderDashboard);
+                run('getGastosByCategory', renderChart);
+            } else if (tab === 'tab3') {
+                run('getDistribucionData', renderMetas);
+            } else if (tab === 'tab4') {
+                run('getDeudasData', renderDeudas);
+            } else if (tab === 'tab5') {
+                run('getUltimasCuentasDidi', renderCuentas);
+            }
         }
-    }
 
-    function renderDashboard(totals) {
-        document.getElementById('totalIngresos').textContent = formatter.format(totals.totalIngresos);
-        document.getElementById('totalGastos').textContent = formatter.format(totals.totalGastos);
-        document.getElementById('balance').textContent = formatter.format(totals.totalIngresos - totals.totalGastos);
-    }
-
-    function renderDistribucionData(data) {
-        const list = document.getElementById('distribucion-list');
-        list.innerHTML = '';
-        if (data.length <= 1) {
-            list.innerHTML = '<li>Aún no tienes metas de distribución.</li>';
-            return;
+        // --- COMUNICACIÓN CON GOOGLE APPS SCRIPT ---
+        function run(func, callback, params = undefined) {
+            const runner = google.script.run.withSuccessHandler(callback).withFailureHandler(err => {
+                console.error("Error:", err);
+            });
+            if (params) runner[func](params);
+            else runner[func]();
         }
-        
-        data.slice(1).forEach(row => {
-            const meta = row[0];
-            const montoNecesario = parseFloat(row[1]) || 0;
-            const montoAhorrado = parseFloat(row[4]) || 0;
-            const porcentaje = montoNecesario > 0 ? (montoAhorrado / montoNecesario) * 100 : 100;
-            
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div class="progress-label">
-                    <span>${meta}</span>
-                    <span>${formatter.format(montoAhorrado)}</span>
+
+        // --- RENDERIZADORES ---
+        function renderDashboard(data) {
+            document.getElementById('totalIngresos').innerText = formatter.format(data.totalIngresos || 0);
+            document.getElementById('totalGastos').innerText = formatter.format(data.totalGastos || 0);
+            const bal = (data.totalIngresos || 0) - (data.totalGastos || 0);
+            document.getElementById('balance').innerText = formatter.format(bal);
+        }
+
+        function renderChart(data) {
+            if (!data || data.length < 2) {
+                document.getElementById('gastosChart').innerHTML = '<p style="text-align:center; color:#666; margin-top:50px;">Sin gastos este mes para mostrar gráfica</p>';
+                return;
+            }
+            const chartData = google.visualization.arrayToDataTable(data);
+            const options = {
+                backgroundColor: 'transparent',
+                pieHole: 0.4,
+                legend: { position: 'bottom', textStyle: { color: '#a0aec0', fontSize: 11 } },
+                pieSliceBorderColor: '#050505',
+                colors: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                chartArea: { width: '90%', height: '80%' }
+            };
+            const chart = new google.visualization.PieChart(document.getElementById('gastosChart'));
+            chart.draw(chartData, options);
+        }
+
+        function renderMetas(data) {
+            const list = document.getElementById('distribucion-list');
+            list.innerHTML = '';
+            if (!data || data.length <= 1) { list.innerHTML = '<li style="justify-content:center;">Sin metas definidas</li>'; return; }
+
+            data.slice(1).forEach(r => {
+                const [meta, req, , , acum] = r; // Asumiendo orden columnas
+                const li = document.createElement('li');
+                const percent = req > 0 ? (acum / req) * 100 : 0;
+                li.innerHTML = `
+                <div style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <span style="color:#e5e7eb;">${meta}</span>
+                        <span style="color:#3b82f6;">${formatter.format(acum)}</span>
+                    </div>
+                    <div style="background:#1f2937; height:6px; border-radius:3px; overflow:hidden;">
+                        <div style="background:#3b82f6; width:${Math.min(percent, 100)}%; height:100%;"></div>
+                    </div>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: ${Math.min(porcentaje, 100)}%;"></div>
-                </div>
-                ${montoNecesario > 0 ? `<div style="text-align: right; font-size: 0.8em; color: #888;">de ${formatter.format(montoNecesario)}</div>` : ''}
             `;
-            list.appendChild(li);
-        });
-    }
-
-    function renderDeudasData(data) {
-        const list = document.getElementById('deudas-list');
-        const select = document.getElementById('deudaSelect');
-        list.innerHTML = '';
-        select.innerHTML = '<option value="">Selecciona una deuda</option>';
-
-        if (!data || data.length === 0) {
-            list.innerHTML = '<li>No hay deudas registradas.</li>';
-            return;
+                list.appendChild(li);
+            });
         }
 
-        data.forEach(row => {
-            const deuda = row[0];
-            const montoInicial = parseFloat(row[1]) || 0;
-            const montoPagado = parseFloat(row[2]) || 0;
-            const montoPendiente = parseFloat(row[3]) || 0;
-            
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div class="deuda-item">
-                    <span><strong>${deuda}</strong></span>
-                    <span>Pendiente: ${formatter.format(montoPendiente)}</span>
+        function renderDeudas(data) {
+            const list = document.getElementById('deudas-list');
+            const select = document.getElementById('deudaSelect');
+            list.innerHTML = '';
+            select.innerHTML = '<option value="">Selecciona deuda...</option>';
+
+            if (!data || !Array.isArray(data) || data.length === 0) {
+                list.innerHTML = '<li style="justify-content:center; color:#666;">¡Libre de deudas! 🎉</li>';
+                return;
+            }
+
+            data.forEach(r => {
+                const [nombre, inicial, pagado, pendiente] = r;
+                // Validar que pendiente sea número
+                const valPendiente = typeof pendiente === 'number' ? pendiente : 0;
+
+                const li = document.createElement('li');
+                li.innerHTML = `
+                <div style="display:flex; flex-direction:column;">
+                    <span style="color:white; font-size:14px;">${nombre}</span>
+                    <small style="color:#d93025;">Pendiente: ${formatter.format(valPendiente)}</small>
                 </div>
-                <div style="font-size: 0.8em; text-align: right; color: #888;">Pagado: ${formatter.format(montoPagado)} / Total: ${formatter.format(montoInicial)}</div>
+                <div style="color:#10b981; font-size:12px;"> Pagado: ${formatter.format(pagado)}</div>
             `;
-            list.appendChild(li);
+                list.appendChild(li);
 
-            const option = document.createElement('option');
-            option.value = deuda;
-            option.textContent = deuda;
-            select.appendChild(option);
-        });
-    }
-    
-    function renderCuentasDidi(data) {
-        if (data) {
-            document.getElementById('nequiTarjeta').textContent = formatter.format(data.Saldo_Nequi_Tarjeta);
-            document.getElementById('nequiBolsillo').textContent = formatter.format(data.Saldo_Nequi_Bolsillo);
-            document.getElementById('deudaDidi').textContent = formatter.format(data.Deuda_Didi);
-            document.getElementById('efectivoBilletera').textContent = formatter.format(data.Efectivo_Billetera);
-            document.getElementById('fechaActualizacion').textContent = data.Fecha || 'N/A';
-        } else {
-            document.getElementById('nequiTarjeta').textContent = formatter.format(0);
-            document.getElementById('nequiBolsillo').textContent = formatter.format(0);
-            document.getElementById('deudaDidi').textContent = formatter.format(0);
-            document.getElementById('efectivoBilletera').textContent = formatter.format(0);
-            document.getElementById('fechaActualizacion').textContent = 'N/A';
+                const opt = document.createElement('option');
+                opt.value = nombre;
+                opt.innerText = nombre;
+                select.appendChild(opt);
+            });
         }
-    }
 
-    google.charts.load('current', {'packages':['corechart']});
+        function renderCuentas(data) {
+            const d = data || {};
+            document.getElementById('nequiTarjeta').innerText = formatter.format(d.Saldo_Nequi_Tarjeta || 0);
+            document.getElementById('nequiBolsillo').innerText = formatter.format(d.Saldo_Nequi_Bolsillo || 0);
+            document.getElementById('deudaDidi').innerText = formatter.format(d.Deuda_Didi || 0);
+            document.getElementById('efectivoBilletera').innerText = formatter.format(d.Efectivo_Billetera || 0);
+            document.getElementById('fechaActualizacion').innerText = d.Fecha || 'N/A';
+        }
 
-    function drawGastosChart(data) {
-        const chartData = google.visualization.arrayToDataTable(data);
-        const options = {
-            title: 'Distribución de Gastos',
-            pieHole: 0.4,
-            colors: ['#4CAF50', '#d93025', '#1a73e8', '#f9ab00', '#747474', '#c5d1eb']
-        };
-        const chart = new google.visualization.PieChart(document.getElementById('gastosChart'));
-        chart.draw(chartData, options);
-    }
+        // --- FORM SUBMITS ---
+        document.getElementById('ingresoForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            run('registrarIngreso', (res) => {
+                document.getElementById('msgRegistros').style.display = 'block';
+                setTimeout(() => document.getElementById('msgRegistros').style.display = 'none', 3000);
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelector('.tab-button').click();
-    });
-</script>
+                // Mostrar consejo de distribución
+                if (res && res.length) {
+                    let txt = "💰 CONSEJO DE DISTRIBUCIÓN:\n\n";
+                    res.forEach(i => txt += `- ${i.meta}: ${formatter.format(i.monto)}\n`);
+                    alert(txt);
+                }
+                e.target.reset();
+            }, data);
+        });
+
+        document.getElementById('gastoForm').addEventListener('submit', e => {
+            e.preventDefault();
+            run('registrarGasto', () => {
+                document.getElementById('msgRegistros').innerText = "Gasto Registrado";
+                document.getElementById('msgRegistros').style.display = 'block';
+                e.target.reset();
+                setTimeout(() => document.getElementById('msgRegistros').style.display = 'none', 3000);
+            }, Object.fromEntries(new FormData(e.target)));
+        });
+
+        document.getElementById('pagoDeudaForm').addEventListener('submit', e => {
+            e.preventDefault();
+            run('registrarPagoDeuda', (nuevasDeudas) => {
+                renderDeudas(nuevasDeudas);
+                document.getElementById('msgDeudas').style.display = 'block';
+                e.target.reset();
+                setTimeout(() => document.getElementById('msgDeudas').style.display = 'none', 3000);
+            }, Object.fromEntries(new FormData(e.target)));
+        });
+
+        document.getElementById('cuentasDidiForm').addEventListener('submit', e => {
+            e.preventDefault();
+            run('procesarCuentasDidi', (datos) => {
+                renderCuentas(datos);
+                document.getElementById('msgCuentas').style.display = 'block';
+                e.target.reset();
+                setTimeout(() => document.getElementById('msgCuentas').style.display = 'none', 3000);
+            }, Object.fromEntries(new FormData(e.target)));
+        });
+
+        // INICIO
+        document.addEventListener('DOMContentLoaded', () => openTab('tab1'));
+
+    </script>
 </body>
+
 </html>
