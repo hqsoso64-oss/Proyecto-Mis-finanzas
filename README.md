@@ -13,6 +13,8 @@ Ya no estás limitado a ver solo el mes actual. El nuevo motor **Analytics** esc
 - **Récords:** Detecta automáticamente tu **Mejor Día**, **Mejor Mes** y **Mejor Fuente** histórica.
 - **Desglose en Español:** Soporte nativo completo para meses y formatos de fecha regionales.
 
+![Analytics Dashboard](assets/New%20V3/ANALYTICS.png)
+
 ### ₿ 2. Crypto Tracker (Multi-API System)
 Sistema robusto de seguimiento de inversiones BTC con redundancia triple.
 - **Triple Redundancia:** Conexión principal a **Coinbase API**, con respaldos automáticos en **Binance** y Fallback estático. Nunca verás un error de conexión.

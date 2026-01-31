@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexscale IA - Finance Manager V3.1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .slide {
+            width: 1350px;
+            height: 1080px; /* LinkedIn 4:5 or 1:1 preferred, but Landscape also works. Let's go 4:5 vertical optimization or 1.91:1. standard 1080x1350 vertical is best for engagement, but landscape 1920x1080 is classic. Let's do 1080x1080 Square for versatility */
+            width: 1080px;
+            height: 1080px;
+            background-color: #050505;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333;
+        }
+
+        /* --- DESIGN ELEMENTS --- */
+        .accent-gradient {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            left: -200px;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .accent-gradient-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, rgba(0,0,0,0) 70%);
+            bottom: -150px;
+            right: -150px;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .content {
+            z-index: 10;
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .brand-pill {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-logo {
+            height: 30px;
+        }
+
+        .brand-text {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .page-number {
+            color: #666;
+            font-size: 24px;
+        }
+
+        /* --- SLIDE CONTENT --- */
+        h1 {
+            font-size: 80px;
+            background: linear-gradient(90deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1.1;
+        }
+        
+        .highlight {
+            color: #3b82f6; 
+            -webkit-text-fill-color: #3b82f6;
+        }
+        
+        .highlight-gold {
+            color: #fbbf24; 
+            -webkit-text-fill-color: #fbbf24;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 32px;
+            margin-top: 30px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .main-image-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .screenshot {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.5s;
+        }
+        
+        .screenshot:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .tag {
+            background: rgba(59,130,246,0.1);
+            color: #60a5fa;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 20px;
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+
+        /* --- SLIDE SPECIFIC --- */
+        .cover-title {
+            font-size: 90px;
+            letter-spacing: -2px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 50px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .check-icon {
+            width: 50px;
+            height: 50px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .feature-text {
+            color: #ddd;
+            font-size: 32px;
+        }
+
+        .cta-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        .big-button {
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 30px 80px;
+            border-radius: 100px;
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 60px;
+            box-shadow: 0 0 40px rgba(59,130,246,0.4);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SLIDE 1: COVER -->
+    <div class="slide">
+        <div class="accent-gradient"></div>
+        <div class="accent-gradient-2"></div>
+        <div class="content">
+            <div class="header">
+                <div class="brand-pill">
+                    <img src="../assets/New V3/NEXSCALE_LOGO.png" class="brand-logo" alt="Logo">
+                    <span class="brand-text">Nexscale IA</span>
+                </div>
+                <div class="page-number">01</div>
+            </div>
+
+            <div style="margin-top: 80px;">
+                <h1 class="cover-title">Tu Excel <span class="highlight">ya no es suficiente.</span></h1>
+                <p class="subtitle">Descubre cómo transformé un simple cuadro de gastos en un <strong>Sistema Financiero Empresarial V3.1</strong></p>
+            </div>
+
+            <div class="main-image-container">
+                <img src="../assets/New V3/DASBOARD.png" class="screenshot" style="transform: perspective(1000px) rotateY(-10deg) rotateX(5deg) scale(0.9);">
+            </div>
+
+            <div class="tag-row">
+                <div class="tag">Google Apps Script</div>
+                <div class="tag">Analytics</div>
+                <div class="tag">Crypto</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: ANALYTICS -->
+    <div class="slide">
+        <div class="accent-gradient" style="background: radial-gradient(circle, rgba(236,72,153,0.15) 0%, rgba(0,0,0,0) 70%);"></div>
+        <div class="content">
+            <div class="header">
+                <div class="brand-pill">
+                    <img src="../assets/New V3/NEXSCALE_LOGO.png" class="brand-logo" alt="Logo">
+                    <span class="brand-text">Nexscale IA</span>
+                </div>
+                <div class="page-number">02</div>
+            </div>
+
+            <h1>Inteligencia <br><span class="highlight" style="color: #ec4899; -webkit-text-fill-color: #ec4899;">Histórica.</span></h1>
+            <p class="subtitle">Ya no mires solo el mes actual. El motor V3 escanea <strong>años de datos</strong> para encontrar patrones, récords y tendencias.</p>
+
+            <div class="main-image-container">
+                <img src="../assets/New V3/ANALYTICS.png" class="screenshot">
+            </div>
+            
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div class="check-icon">✓</div>
+                    <div class="feature-text">Tendencias Semanales</div>
+                </li>
+                <li class="feature-item">
+                    <div class="check-icon">✓</div>
+                    <div class="feature-text">Récords Históricos (Best Month)</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: CRYPTO -->
+    <div class="slide">
+        <div class="accent-gradient" style="background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, rgba(0,0,0,0) 70%);"></div>
+        <div class="content">
+            <div class="header">
+                <div class="brand-pill">
+                    <img src="../assets/New V3/NEXSCALE_LOGO.png" class="brand-logo" alt="Logo">
+                    <span class="brand-text">Nexscale IA</span>
+                </div>
+                <div class="page-number">03</div>
+            </div>
+
+            <h1>Crypto Tracker <br><span class="highlight-gold">Institucional.</span></h1>
+            <p class="subtitle">Olvídate de calcular la TRM manualmente. Seguimiento en tiempo real con <strong>Triple Redundancia de API</strong>.</p>
+
+            <div class="main-image-container">
+                <img src="../assets/New V3/CRYPTO.png" class="screenshot">
+            </div>
+
+            <div class="tag-row" style="justify-content: center;">
+                <div class="tag" style="border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,0.1);">Bitcoin</div>
+                <div class="tag" style="border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,0.1);">USD + COP Display</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: CTA -->
+    <div class="slide">
+        <div class="accent-gradient"></div>
+        <div class="accent-gradient-2"></div>
+        <div class="content">
+            <div class="header">
+                 <div class="brand-pill">
+                    <img src="../assets/New V3/NEXSCALE_LOGO.png" class="brand-logo" alt="Logo">
+                    <span class="brand-text">Nexscale IA</span>
+                </div>
+                <div class="page-number">04</div>
+            </div>
+
+            <div class="cta-container">
+                <h1 style="font-size: 100px;">Es tuyo.<br>Es <span class="highlight">Open Source.</span></h1>
+                
+                <p class="subtitle" style="text-align: center; margin-top: 60px;">
+                    Transforma tus finanzas personales hoy mismo.<br>
+                    Código disponible en GitHub.
+                </p>
+
+                <div class="big-button">
+                    github.com/hqsoso64-oss
+                </div>
+
+                <div style="margin-top: 100px; display: flex; gap: 40px; align-items: center;">
+                     <img src="../assets/New V3/NEXSCALE_LOGO.png" style="height: 80px;">
+                     <div style="text-align: left;">
+                         <div style="color: white; font-size: 30px; font-weight: bold;">Nexscale IA</div>
+                         <div style="color: #666; font-size: 24px;">Tecnología para Escalar</div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
