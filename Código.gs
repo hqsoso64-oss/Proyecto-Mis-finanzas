@@ -386,9 +386,9 @@ function getDashboardAnalytics() {
         currentMonthStats.total += amount;
         currentMonthStats.bySource[source] = (currentMonthStats.bySource[source] || 0) + amount;
         
-        // DEBUG: Log Didi entries specifically
-        if (source.toLowerCase() === 'didi') {
-          Logger.log(`[DIDI DEBUG] Date: ${Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/yyyy')} | Amount: ${amount} | Raw Source: "${row[sourceIdx]}" | Normalized: "${source}"`);
+        // DEBUG: Log Didi AND Caro entries specifically
+        if (source.toLowerCase().includes('didi') || source.toLowerCase().includes('caro')) {
+          Logger.log(`[DEBUG SOURCE] Source: "${source}" | Amount: ${amount} | Date: ${Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd/MM/yyyy')} | MonthIdx: ${date.getMonth()} vs ${currentMonthIdx}`);
         }
       }
     });
@@ -529,6 +529,7 @@ function getCryptoData() {
   // Try Coinbase API
   try {
     const res = UrlFetchApp.fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot', {muteHttpExceptions: true});
+    Logger.log('[API RAW BTC] Coinbase Response: ' + res.getContentText());
     const json = JSON.parse(res.getContentText());
     if (json && json.data && json.data.amount) {
       btcUsd = parseFloat(json.data.amount);
@@ -565,7 +566,9 @@ function getCryptoData() {
   let TRM = 0;
   try {
     const response = UrlFetchApp.fetch('https://api.exchangerate-api.com/v4/latest/USD', {muteHttpExceptions: true});
-    const data = JSON.parse(response.getContentText());
+    const content = response.getContentText();
+    Logger.log('[API RAW TRM] ExchangeRate Response: ' + content.substring(0, 500)); 
+    const data = JSON.parse(content);
     if (data && data.rates && data.rates.COP) {
       TRM = data.rates.COP;
       Logger.log('[TRM API] Current USD/COP: $' + TRM);
