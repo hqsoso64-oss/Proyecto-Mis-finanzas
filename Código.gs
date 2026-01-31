@@ -524,39 +524,38 @@ function getCryptoData() {
   history.reverse();
 
   // === GET CURRENT BTC PRICE IN USD ===
+  // === GET CURRENT BTC PRICE IN USD (REAL TIME) ===
   let btcUsd = 0;
   
-  // Try Coinbase API
+  // Opción 1: CoinDesk (Muy estable para scripts)
   try {
-    const res = UrlFetchApp.fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot', {muteHttpExceptions: true});
-    Logger.log('[API RAW BTC] Coinbase Response: ' + res.getContentText());
+    const res = UrlFetchApp.fetch('https://api.coindesk.com/v1/bpi/currentprice/USD.json', {muteHttpExceptions: true});
     const json = JSON.parse(res.getContentText());
-    if (json && json.data && json.data.amount) {
-      btcUsd = parseFloat(json.data.amount);
-      Logger.log('[Coinbase] BTC Price: $' + btcUsd + ' USD');
+    if (json && json.bpi && json.bpi.USD) {
+      btcUsd = json.bpi.USD.rate_float;
+      Logger.log('[API SUCCESS] CoinDesk BTC Price: $' + btcUsd);
     }
   } catch(e) { 
-    Logger.log('[Coinbase] Error: ' + e);
+    Logger.log('[API ERROR] CoinDesk failed: ' + e);
   }
   
-  // Fallback: Binance
+  // Opción 2: CoinGecko (Respaldo)
   if (btcUsd === 0) {
     try {
-      const res = UrlFetchApp.fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', {muteHttpExceptions: true});
+      const res = UrlFetchApp.fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd', {muteHttpExceptions: true});
       const json = JSON.parse(res.getContentText());
-      if (json && json.price) {
-        btcUsd = parseFloat(json.price);
-        Logger.log('[Binance] BTC Price: $' + btcUsd + ' USD');
+      if (json && json.bitcoin && json.bitcoin.usd) {
+        btcUsd = json.bitcoin.usd;
+        Logger.log('[API SUCCESS] CoinGecko BTC Price: $' + btcUsd);
       }
     } catch(e) { 
-      Logger.log('[Binance] Error: ' + e);
+      Logger.log('[API ERROR] CoinGecko failed: ' + e);
     }
   }
-  
-  // Final fallback
+
+  // Si todo falla, NO inventar precio. Dejar en 0 para alertar error real.
   if (btcUsd === 0) {
-    btcUsd = 104000;
-    Logger.log('[FALLBACK] Using static BTC price: $' + btcUsd + ' USD');
+    Logger.log('[CRITICAL] No se pudo obtener precio BTC de ninguna API.');
   }
   
   // === CALCULATION IN USD ===
