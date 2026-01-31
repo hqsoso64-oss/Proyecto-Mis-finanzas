@@ -561,14 +561,32 @@ function getCryptoData() {
   // === CALCULATION IN USD ===
   const portfolioValueUsd = totalBtc * btcUsd;
   
-  // === CONVERSION TO COP ===
-  const TRM = 4200; // Tasa Representativa del Mercado (aproximada)
+  // === GET DYNAMIC TRM (USD -> COP) ===
+  let TRM = 0;
+  try {
+    const response = UrlFetchApp.fetch('https://api.exchangerate-api.com/v4/latest/USD', {muteHttpExceptions: true});
+    const data = JSON.parse(response.getContentText());
+    if (data && data.rates && data.rates.COP) {
+      TRM = data.rates.COP;
+      Logger.log('[TRM API] Current USD/COP: $' + TRM);
+    }
+  } catch (e) {
+    Logger.log('[TRM API] Error fetching TRM: ' + e);
+  }
+
+  // Fallback TRM if API fails
+  if (TRM === 0) {
+    TRM = 4200;
+    Logger.log('[FALLBACK] Using static TRM: $4200');
+  }
+
   const portfolioValueCop = portfolioValueUsd * TRM;
   
   // Log final values
   Logger.log('=== CRYPTO SUMMARY ===');
   Logger.log('Total BTC: ' + totalBtc);
   Logger.log('BTC Price (USD): $' + btcUsd);
+  Logger.log('TRM Used: $' + TRM);
   Logger.log('Portfolio Value (USD): $' + portfolioValueUsd);
   Logger.log('Portfolio Value (COP): $' + portfolioValueCop);
 
@@ -579,7 +597,8 @@ function getCryptoData() {
       totalBtc: totalBtc,
       currentValueUsd: portfolioValueUsd,
       currentValueCop: portfolioValueCop,
-      currentPriceUsd: btcUsd
+      currentPriceUsd: btcUsd, // We keep these for completeness
+      currentTRM: TRM          // Sending TRM to frontend might be useful
     }
   };
 }
