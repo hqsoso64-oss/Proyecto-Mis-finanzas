@@ -1,38 +1,31 @@
-# 🚀 Gestor Financiero Pro (V2.1 - Coach IA Edition)
+# 🚀 Gestor Financiero Pro (V3.1 - Enterprise Final Edition)
 
-¡Bienvenido a la evolución del control financiero personal! Esta **versión 2.1** introduce inteligencia artificial básica para diagnósticos financieros y un rediseño total con **Dark Mode Premium**.
+¡Bienvenido a la evolución definitiva del control financiero! La **versión 3.1** transforma este gestor en una suite de inteligencia de negocios personal, añadiendo analítica de grandes datos (históricos) y seguimiento de inversiones en Criptomonedas de nivel institucional.
 
-![Dashboard Preview](assets/nueva%20interfaz/dasboard.png)
+![Dashboard Preview](assets/New%20V3/DASBOARD.png)
 
-## ✨ Novedades de la Versión 2.1
+## ✨ Novedades de la Versión 3.1 (Enterprise)
 
-### 🧠 1. Coach Financiero Inteligente (Nuevo)
-Hemos integrado un motor de análisis heurístico que actúa como tu asesor personal.
-- **Diagnóstico en Tiempo Real:** Analiza ingresos, gastos y deudas al instante.
-- **Semáforo Financiero:** Clasifica tu estado en "Déficit Crítico", "Zona de Riesgo" o "Saludable".
-- **Consejos Accionables:** Genera planes de acción específicos (ej. "Método Bola de Nieve") y tips educativos aleatorios cada vez que consultas.
+### 📊 1. Motor de Analítica Histórica (Enterprise Engine)
+Ya no estás limitado a ver solo el mes actual. El nuevo motor **Analytics** escanea automáticamente todo tu historial de hojas de cálculo (`Ingresos_Septiembre`, `Ingresos_Octubre`...) para ofrecerte insights poderosos:
+- **Inteligencia de Datos:** Algoritmos mejorados para detección de fuentes de ingreso y normalización de datos (ej. "Didi", "didi ").
+- **Tendencias Semanales:** Gráfica de barras interactivas para visualizar tu crecimiento semanal.
+- **Récords:** Detecta automáticamente tu **Mejor Día**, **Mejor Mes** y **Mejor Fuente** histórica.
+- **Desglose en Español:** Soporte nativo completo para meses y formatos de fecha regionales.
 
-### 🎨 2. Nueva Interfaz Dark Mode
-Hemos migrado a un diseño oscuro profesional (`#050505`) inspirado en plataformas de trading y auditoría de alta gama.
-- **Tipografía:** Inter (Google Fonts) para máxima legibilidad.
-- **Colorimetría:** Acentos neón para estados financieros.
-- **UX:** Tarjetas con elevación sutil y feedback visual inmediato.
+### ₿ 2. Crypto Tracker (Multi-API System)
+Sistema robusto de seguimiento de inversiones BTC con redundancia triple.
+- **Triple Redundancia:** Conexión principal a **Coinbase API**, con respaldos automáticos en **Binance** y Fallback estático. Nunca verás un error de conexión.
+- **Portafolio Dual-Currency:** Visualización simultánea de tu portafolio en **USD** (Dólares Globaxes) y su equivalente en **COP** (Pesos Colombianos) en tiempo real, calculado con TRM dinámica.
+- **Micro-Precisión:** Seguimiento de hasta 8 decimales para satoshis.
+- **Registro de Operaciones:** Interfaz optimizada para registrar compras P2P o Exchange.
 
-<table>
-  <tr>
-    <td align="center"><b>Dashboard</b><br><img src="assets/nueva%20interfaz/dasboard.png" width="400"></td>
-    <td align="center"><b>Gestión de Deudas</b><br><img src="assets/nueva%20interfaz/Deudas.png" width="400"></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Registro de Movimientos</b><br><img src="assets/nueva%20interfaz/Registro.png" width="400"></td>
-    <td align="center"><b>Coach IA</b><br><img src="assets/nueva%20interfaz/Cuentas.png" width="400"></td>
-  </tr>
-</table>
+![Crypto Dashboard](assets/New%20V3/CRYPTO.png)
 
-### 🛠️ 3. Mejoras Técnicas (Under the Hood)
-- **Fix "Ghost Data" en Deudas:** Solucionado el error crítico donde las deudas desaparecían al registrar pagos.
-- **Validación Robusta de Fechas:** Filtros de mes/año refactorizados.
-- **Arquitectura Cliente-Servidor:** Nueva capa de comunicación asíncrona segura para evitar bloqueos de interfaz (Spinner infinito resuelto).
+### 🧠 3. Coach Financiero & Dark Mode (V3)
+- **UI Ultra-Premium:** Interfaz oscura `#050505` con acentos neón y *Glassmorphism*.
+- **Semáforo Financiero:** Diagnóstico inmediato de Saludable/Riesgo.
+- **Cierres Mensuales:** Resúmenes automáticos al final de cada periodo.
 
 ---
 
@@ -40,15 +33,31 @@ Hemos migrado a un diseño oscuro profesional (`#050505`) inspirado en plataform
 
 Este proyecto funciona sobre **Google Apps Script**.
 
-1. Abre tu hoja de cálculo en Google Sheets.
-2. Ve a `Extensiones` > `Apps Script`.
-3. Copia el contenido de `Código.gs` en el editor del servidor.
-4. Crea un archivo `Index.html` y pega el código del frontend.
-5. Despliega como aplicación web (`Implementar` > `Nueva implementación`).
+1. **Configuración del Script:**
+   - Abre tu hoja de cálculo en Google Sheets.
+   - Ve a `Extensiones` > `Apps Script`.
+   - Copia el contenido de `Código.gs`.
+
+2. **Interfaz Web:**
+   - Crea un archivo `Index.html` en el editor.
+   - Pega el código del frontend actualizado.
+   - **IMPORTANTE:** Realiza una ejecución manual de la función `getCryptoData` para autorizar los permisos de `UrlFetchApp`.
+
+3. **Despliegue:**
+   - Implementar > Nueva implementación > Tipo: Aplicación web > Acceso: Solo yo (recomendado para seguridad).
+
+### ⚙️ Configuración de Datos (Importante)
+
+El sistema es **autónomo**, pero sigue estas reglas para que la analítica funcione:
+
+*   **Historial de Ingresos:** El sistema leerá automáticamente cualquier hoja que contenga "Ingresos" en el nombre.
+*   **Permisos de API:** Debido a la integración con Coinbase/Binance, Google te pedirá autorización para conectar a servicios externos. Debes aceptar para ver el precio de BTC.
+
+---
 
 ## 👨‍💻 Autor
 **John Fredy Muñoz** - Consultor Principal  
 *Especialista en Automatización Financiera y Desarrollo de Soluciones Google Workspace.*
 
 ---
-*Este proyecto es Open Source. Si te gusta esta nueva interfaz, ¡dale una estrella ⭐ al repositorio!*
+*Este proyecto es Open Source. Transforma tus finanzas personales en una empresa.*
