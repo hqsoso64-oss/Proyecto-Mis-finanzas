@@ -1,23 +1,25 @@
-# 🚀 Estado del Proyecto: Gestor Financiero Pro (GAS)
 
-**Última Actualización:** 2026-01-30
-**Versión Actual:** v4.0 (Robust Analytics & Crypto Fallback)
+# 🚀 Estado del Proyecto: Gestor Financiero Pro (Nexscale Edition)
+
+**Última Actualización:** 2026-01-31
+**Versión Actual:** v3.1 Enterprise
 
 ## 🚥 Tablero de Control
 
 | Módulo | Estado | Progreso | Comentario Técnico |
 | :--- | :---: | :---: | :--- |
-| **Frontend Base** | ✅ Listo | 100% | UI Glassmorphism, Tabs, Navegación Rápida. |
-| **Backend (GAS)** | ✅ Listo | 100% | Lógica robusta de fechas, APIS múltiples Crypto. |
-| **Analytics Engine** | ✅ Listo | 100% | Desglose mensual y por fuente, Gráficas limpias (Altas). |
-| **Crypto Tracker** | ✅ Listo | 100% | Fallback Forzado ($95k USD) si APIs fallan. |
-| **Seguridad** | ✅ Listo | 95% | Manejo de errores API y validación de fechas (DD/MM). |
+| **Frontend UI** | ✅ Listo | 100% | Logo Nexscale IA integrado (Base64), Diseño Dark Mode optimizado. |
+| **Backend (GAS)** | ✅ Listo | 100% | Lógica 'Caro' depurada, APIs externas conectadas. |
+| **Crypto Core** | ✅ Listo | 100% | **CoinDesk API Primary**. Precio Real-Time. Eliminado fallback estático. |
+| **Integraciones** | ✅ Listo | 100% | TRM en tiempo real (ExchangeRate-API). |
+| **Marketing** | ✅ Listo | 100% | Kit LinkedIn Completo: Portada V2 (Anti-crop), Carousel HTML, Post Text. |
 
 ## 🏆 Hitos Recientes
-- [x] (30/01) **Crypto V4:** Valor $0 eliminado mediante Fallback Estático (~104k USD) en caso de fallo total de APIs.
-- [x] (30/01) **Chart V4:** Altura aumentada (400px), etiquetas eje X legibles (Sem 1, 2...) y texto más grande.
-- [x] (30/01) **Bug Fix:** Solución a error "Cargando..." en tablas mediante verificación de estructura de datos.
+- [x] (31/01) **Branding Final:** Banner LinkedIn "Nexscale IA" generado con logo integrado y ajustado para evitar solapamiento con foto de perfil.
+- [x] (31/01) **Crypto Accuracy:** Eliminación de precios fijos ($104k). Implementación de APIs CoinDesk y CoinGecko para valoración exacta.
+- [x] (31/01) **UX Improvement:** Visualización explícita del precio Spot (BTC) en la interfaz para transparencia.
+- [x] (31/01) **Bug Fix:** Corrección de discrepancia en saldos de fuente 'Caro' mediante limpieza de strings.
 
 ## 📌 Siguientes Pasos
-1. **Despliegue de Usuario:** Validar V4 FINAL.
-2. **Commit Final:** Subir código a repositorio.
+1. **Despliegue Final:** Ejecutar nuevo despliegue en Google Apps Script.
+2. **Promoción:** Publicar contenido generado en LinkedIn.
