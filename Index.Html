@@ -323,7 +323,206 @@
             <button class="tab-button" onclick="openTab('tab3')">Metas</button>
             <button class="tab-button" onclick="openTab('tab4')">Deudas</button>
             <button class="tab-button" onclick="openTab('tab5')">Cuentas</button>
+            <button class="tab-button coach-btn" onclick="openTab('tab6')"
+                style="border:1px solid #8b5cf6; color:#a78bfa;">Coach 🤖</button>
         </div>
+
+        <!-- COACH IA (NUEVO) -->
+        <div id="tab6" class="tab-content">
+            <div class="coach-container">
+                <div class="coach-intro" id="coachIntro">
+                    <div class="ai-avatar">🧠</div>
+                    <h3
+                        style="background: linear-gradient(90deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Análisis Financiero Inteligente</h3>
+                    <p style="color:#d1d5db; max-width:400px; margin:0 auto;">Analizaré tus patrones de gastos, ingresos
+                        y deudas para generarte un diagnóstico personalizado en tiempo real.</p>
+                    <button class="analyze-btn" onclick="activarCoach()">✨ Generar Diagnóstico</button>
+                </div>
+
+                <div class="coach-loading" id="coachLoading" style="display:none; text-align:center; padding:40px;">
+                    <div class="spinner"></div>
+                    <p style="color:#a78bfa;">Analizando salud financiera...</p>
+                </div>
+
+                <div class="coach-result" id="coachResult" style="display:none;">
+                    <div class="result-header"
+                        style="border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px; margin-bottom:15px;">
+                        <span
+                            style="background:#8b5cf6; color:white; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:bold;">AI
+                            INSIGHT</span>
+                        <h3 id="aiTitle" style="margin:10px 0 0 0; font-size:20px;">Título del Diagnóstico</h3>
+                    </div>
+                    <div class="result-body">
+                        <p id="aiMessage" style="color:#e5e7eb; line-height:1.6;">Mensaje...</p>
+
+                        <div style="display:flex; gap:10px; margin:20px 0;">
+                            <div class="pill"
+                                style="background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:20px; font-size:12px; color:#9ca3af; border:1px solid rgba(255,255,255,0.1);">
+                                Ahorro: <b id="lblAhorro" style="color:white;">0%</b></div>
+                            <div class="pill"
+                                style="background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:20px; font-size:12px; color:#9ca3af; border:1px solid rgba(255,255,255,0.1);">
+                                Mayor Gasto: <b id="lblTop" style="color:white;">--</b></div>
+                        </div>
+
+                        <div class="action-plan"
+                            style="background:rgba(139, 92, 246, 0.1); padding:15px; border-radius:12px; border-left:3px solid #8b5cf6;">
+                            <h4 style="margin:0 0 10px 0; color:#a78bfa; font-size:13px; text-transform:uppercase;">💡
+                                Plan de Acción:</h4>
+                            <ul id="aiActions" style="list-style:none; padding:0; margin:0;"></ul>
+                        </div>
+                    </div>
+                    <button onclick="resetCoachUI()"
+                        style="background:transparent; border:1px solid #374151; color:#9ca3af; padding:10px 20px; border-radius:50px; margin-top:20px; font-size:12px; cursor:pointer;">Nuevo
+                        Análisis</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STYLES EXTRA PARA COACH -->
+        <!-- ... (Estilos iguales) ... -->
+        <style>
+            /* ... estilos existentes ... */
+            .ai-avatar {
+                font-size: 60px;
+                margin-bottom: 20px;
+                animation: float 3s ease-in-out infinite;
+                display: inline-block;
+            }
+
+            @keyframes float {
+
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+
+            .analyze-btn {
+                background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 50px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+                transition: transform 0.2s;
+                width: auto;
+                margin-top: 25px;
+            }
+
+            .analyze-btn:hover {
+                transform: scale(1.05);
+            }
+
+            .coach-result {
+                background: rgba(17, 24, 39, 0.8);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                border-radius: 20px;
+                padding: 25px;
+                text-align: left;
+                animation: slideUp 0.5s ease;
+            }
+
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(255, 255, 255, 0.1);
+                border-left-color: #8b5cf6;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 15px auto;
+            }
+
+            @keyframes spin {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            #aiActions li {
+                background: transparent !important;
+                border-left: none !important;
+                padding: 5px 0 !important;
+                color: #d1d5db;
+                border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            }
+
+            #aiActions li::before {
+                content: "👉 ";
+            }
+        </style>
+
+        <!-- SCRIPT DEL COACH -->
+        <script>
+            function activarCoach() {
+                document.getElementById('coachIntro').style.display = 'none';
+                document.getElementById('coachLoading').style.display = 'block';
+
+                // Consejos aleatorios para variar el mensaje
+                const tips = [
+                    "💡 Tip: Revisa tus 'gastos hormiga' esta semana.",
+                    "💡 Tip: ¿Has considerado invertir el 5% de tus ingresos?",
+                    "💡 Tip: El ahorro es pagarte a ti mismo primero.",
+                    "💡 Tip: Revisa suscripciones que ya no usas."
+                ];
+                const randomTip = tips[Math.floor(Math.random() * tips.length)];
+
+                setTimeout(() => {
+                    // LLAMADA DIRECTA SIN WRAPPER (Mas segura para debug)
+                    google.script.run
+                        .withSuccessHandler((data) => {
+                            document.getElementById('coachLoading').style.display = 'none';
+                            document.getElementById('coachResult').style.display = 'block';
+
+                            document.getElementById('aiTitle').innerText = data.titulo;
+                            document.getElementById('aiMessage').innerHTML = data.mensaje + "<br><br><small style='color:#a78bfa'>" + randomTip + "</small>";
+                            document.getElementById('lblAhorro').innerText = data.metricas.ahorro;
+                            document.getElementById('lblTop').innerText = data.metricas.topCat;
+
+                            const list = document.getElementById('aiActions');
+                            list.innerHTML = '';
+                            if (data.acciones) {
+                                data.acciones.forEach(act => {
+                                    const li = document.createElement('li');
+                                    li.innerText = act;
+                                    list.appendChild(li);
+                                });
+                            }
+                        })
+                        .withFailureHandler((err) => {
+                            document.getElementById('coachLoading').style.display = 'none';
+                            alert("Error al conectar con el Coach: " + err.message);
+                            document.getElementById('coachIntro').style.display = 'block';
+                        })
+                        .analizarSaludFinanciera();
+                }, 1500);
+            }
+
+            function resetCoachUI() {
+                document.getElementById('coachResult').style.display = 'none';
+                document.getElementById('coachIntro').style.display = 'block';
+            }
+        </script>
 
         <!-- DASHBOARD -->
         <div id="tab1" class="tab-content active">

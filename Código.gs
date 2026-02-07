@@ -281,3 +281,102 @@ function formatDateValue(value) {
   }
   return 'N/A';
 }
+
+/* =========================================
+   🧠 MOTOR DE INTELIGENCIA FINANCIERA (COACH)
+   ========================================= */
+
+function analizarSaludFinanciera() {
+  try {
+    // 1. Recopilar Datos Holísticos
+    const totals = getTotals(); // { totalIngresos, totalGastos }
+    const gastosRaw = getGastosByCategory(); // [['Cat', $$$], ...]
+    const deudas = getDeudasData(); // Lista de deudas
+    
+    // 2. Procesar Métricas Clave
+    const ingreso = totals.totalIngresos || 0;
+    const gasto = totals.totalGastos || 0;
+    const balance = ingreso - gasto;
+    const tasaAhorro = ingreso > 0 ? ((balance / ingreso) * 100) : 0;
+    
+    // Encontrar categoría de mayor gasto
+    let topCategoria = { nombre: 'N/A', monto: 0 };
+    if (gastosRaw && gastosRaw.length > 1) {
+      const categorias = gastosRaw.slice(1).map(r => ({ nombre: r[0], monto: r[1] }));
+      categorias.sort((a, b) => b.monto - a.monto);
+      if (categorias.length > 0) topCategoria = categorias[0];
+    }
+
+    // Calcular deuda total
+    let totalDeuda = 0;
+    if (deudas && deudas.length > 0) {
+      totalDeuda = deudas.reduce((acc, row) => acc + (parseFloat(row[3]) || 0), 0);
+    }
+
+    // 3. Generar "Insight" (El Cerebro)
+    let titulo = "";
+    let mensaje = "";
+    let color = "";
+    let acciones = [];
+
+    // ESCENARIO 1: DÉFICIT
+    if (balance < 0) {
+      titulo = "⚠️ Alerta de Déficit Crítico";
+      color = "red";
+      const deficitPct = ingreso > 0 ? Math.abs(((gasto/ingreso)-1)*100).toFixed(1) : "100";
+      mensaje = `Estás gastando un <strong>${deficitPct}% más</strong> de lo que ingresas. Tu mayor fuga es dinero es <strong>${topCategoria.nombre}</strong> con ${formatMoney(topCategoria.monto)}.`;
+      acciones = ["Detén gastos hormiga.", `Reduce ${topCategoria.nombre} a la mitad.`];
+    } 
+    // ESCENARIO 2: AL LÍMITE
+    else if (tasaAhorro < 10) {
+      titulo = "⚠️ Zona de Riesgo";
+      color = "yellow";
+      mensaje = `Solo conservas el <strong>${tasaAhorro.toFixed(1)}%</strong> de tus ingresos. `;
+      if (totalDeuda > 0) {
+        mensaje += `Con deuda de <strong>${formatMoney(totalDeuda)}</strong>, es peligroso.`;
+        acciones = ["Audita suscripciones.", `Abona extra a deuda: ${deudas[0][0]}.`];
+      } else {
+        mensaje += "Sube el margen al 20%.";
+        acciones = ["Define una meta de ahorro automática."];
+      }
+    } 
+    // ESCENARIO 3: SALUDABLE
+    else {
+      titulo = "🚀 Camino a la Libertad";
+      color = "green";
+      mensaje = `¡Excelente! Ahorras el <strong>${tasaAhorro.toFixed(1)}%</strong>.`;
+      if (totalDeuda > 0) {
+        mensaje += " Ataca tus deudas agresivamente.";
+        acciones = ["Aplica método 'Bola de Nieve'."];
+      } else {
+        mensaje += " Pon ese dinero a trabajar.";
+        acciones = ["Evalúa CDTs o ETFs."];
+      }
+    }
+
+    return {
+      titulo: titulo,
+      mensaje: mensaje,
+      color: color,
+      acciones: acciones,
+      metricas: {
+        ahorro: Math.round(tasaAhorro) + "%",
+        topCat: topCategoria.nombre,
+        deudaTotal: formatMoney(totalDeuda)
+      }
+    };
+  } catch (e) {
+    // FALLBACK DE SEGURIDAD
+    return {
+      titulo: "⚠️ Error de Análisis",
+      mensaje: "No hay suficientes datos para generar un diagnóstico. " + e.message,
+      color: "red",
+      acciones: ["Registra al menos un ingreso y un gasto."],
+      metricas: { ahorro: "--", topCat: "--", deudaTotal: "--" }
+    };
+  }
+}
+
+function formatMoney(amount) {
+  return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(amount);
+}

@@ -1,0 +1,32 @@
+🚀 De Hoja de Cálculo a Sistema Empresarial: Así transformé mis Finanzas Personales con Código (V3.1)
+
+¿Cuántas veces has intentado llevar tus gastos en un Excel y lo abandonas al tercer mes? 🤔
+
+Yo estuve ahí. Las apps genéricas no se adaptaban a mi realidad (pesos colombianos, ingresos variables, crypto, deudas locales). Así que hice lo que haría cualquier ingeniero: **Construí mi propio ecosistema.**
+
+Hoy presento la **Versión 3.1 Enterprise** de mi Gestor Financiero Personal, ahora bajo el sello de **Nexscale IA**.
+
+💡 **¿Qué hace a este sistema diferente?**
+
+1️⃣ **Inteligencia Histórica:** Ya no veo "el mes actual". El sistema escanea años de historia para decirme cuál fue mi mejor mes, mi fuente de ingreso #1 y mi tendencia de crecimiento semanal.
+
+2️⃣ **Crypto Tracker Institucional:** Nada de cálculos manuales.
+   - Conexión triple (API Coinbase + Binance + Fallback).
+   - Visualización Dual: Veo mi portafolio en USD y su conversión exacta a COP en tiempo real. 
+   - ROI automático de mis satoshis.
+
+3️⃣ **UX/UI Dark Mode:** Porque las finanzas se revisan de noche. Interfaz Glassmorphism hecha con HTML/CSS puro y Google Apps Script.
+
+🛠️ **Tech Stack:**
+- Backend: Google Apps Script (Javascript)
+- Frontend: HTML5 + CSS3 (Grid/Flexbox)
+- Database: Google Sheets (estructurado como DB relacional)
+- APIs: Coinbase & Binance Public Data
+
+👇 **Desliza el carrusel para ver la transformación.**
+
+Este proyecto es **Open Source**. Si quieres dejar de jugar con tus finanzas y empezar a gestionarlas como una empresa, el código es tuyo.
+
+🔗 **Repositorio GitHub en el primer comentario.**
+
+#DesarrolloWeb #GoogleAppsScript #FinanzasPersonales #Crypto #Bitcoin #SoftwareEngineering #NexscaleIA #Productivity
