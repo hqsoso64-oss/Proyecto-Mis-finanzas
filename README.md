@@ -1,6 +1,6 @@
 # 🚀 Gestor Financiero Pro (V2.1 - Coach IA Edition)
 
-¡Bienvenido a la evolución del control financiero personal! Esta **versión 2.1** introduce inteligencia artificial básica para diagnósticos financieros y un rediseño total con **Dark Mode Premium**.
+¡Bienvenido a la evolución del control financiero personal! Esta **versión 2.1** introduce inteligencia artificial básica para diagnósticos financieros y un rediseño total con **Dark Mode Pre[...]
 
 ![Dashboard Preview](assets/nueva%20interfaz/dasboard.png)
 
@@ -38,17 +38,44 @@ Hemos migrado a un diseño oscuro profesional (`#050505`) inspirado en plataform
 
 ## 🚀 Instalación y Uso
 
-Este proyecto funciona sobre **Google Apps Script**.
+¿Listo para comenzar? Este proyecto se ejecuta sobre **Google Apps Script**, lo que significa que puedes implementarlo completamente en tu cuenta de Google sin necesidad de servidores externos ni configuraciones complejas.
 
-1. Abre tu hoja de cálculo en Google Sheets.
-2. Ve a `Extensiones` > `Apps Script`.
-3. Copia el contenido de `Código.gs` en el editor del servidor.
-4. Crea un archivo `Index.html` y pega el código del frontend.
-5. Despliega como aplicación web (`Implementar` > `Nueva implementación`).
+### ⚡ Configuración Rápida
+
+El proceso es simple y directo:
+
+1. **Descarga el repositorio** - Obtén todos los archivos necesarios
+2. **Crea tu Google Sheet** - Tu base de datos personal
+3. **Integra el código** - Copia los archivos del proyecto en Google Apps Script
+4. **Despliega la aplicación** - Publica tu app en segundos
+
+### 📖 Guía Detallada Paso a Paso
+
+Para una configuración completa y sin complicaciones, consulta nuestra **documentación exhaustiva**:
+
+👉 **[Lee el archivo SETUP.md](./SETUP.md)** ← Aquí encontrarás:
+- Instrucciones detalladas de instalación
+- Cómo crear y configurar tus hojas de cálculo
+- Estructura exacta de las tablas necesarias
+- Solución de problemas comunes
+- Preguntas frecuentes sobre seguridad
+- Opciones de personalización
+
+> **💡 Consejo:** Si es la primera vez que usas esta herramienta, sigue el SETUP.md paso a paso. Solo te tomará unos 5 minutos.
+
+### 🔒 Seguridad y Privacidad
+
+✅ **Completamente seguro** - Todos tus datos permanecen en tu cuenta de Google  
+✅ **Sin credenciales externas** - No requiere API keys ni tokens secretos  
+✅ **Control total** - Solo tú tienes acceso a tu información financiera  
+
+---
 
 ## 👨‍💻 Autor
+
 **John Fredy Muñoz** - Consultor Principal  
 *Especialista en Automatización Financiera y Desarrollo de Soluciones Google Workspace.*
 
 ---
-*Este proyecto es Open Source. Si te gusta esta nueva interfaz, ¡dale una estrella ⭐ al repositorio!*
+
+*Este proyecto es Open Source. Si te gusta esta interfaz moderna y funcional, ¡dale una estrella ⭐ al repositorio!*
